@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.utils.FrequencyType;
 import org.example.model.utils.Task;
 import org.example.model.utils.TaskType;
 import org.example.repository.TaskRepository;
@@ -31,8 +32,25 @@ public class TaskManager {
     }
 
 
-    public void createTask(String title, String description, TaskType type, String frequencyType, Timestamp dateTime){
-
+    public void createTask(String title,
+                           String description,
+                           TaskType type,
+                           FrequencyType frequencyType,
+                           LocalDateTime dateTime){
+        repository.createTask(title,
+                description, type.name(),
+                frequencyType.name(),
+                Timestamp.valueOf(dateTime));
     }
+
+    public void deleteById(long id) {
+        repository.deleteById(id);
+    }
+
+    public Task getTaskById(long id) {
+       return repository.getTaskById(id);
+    }
+
+
 
 }

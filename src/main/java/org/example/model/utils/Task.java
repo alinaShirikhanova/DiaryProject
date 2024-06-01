@@ -8,13 +8,15 @@ public abstract class Task implements Repeatable {
     private String title;
     private String description;
     private TaskType type;
+    private FrequencyType frequencyType;
     private LocalDateTime dateTime;
 
-    public Task(long id, String title, String description, TaskType type, LocalDateTime dateTime) {
+    public Task(long id, String title, String description, TaskType type, FrequencyType frequencyType, LocalDateTime dateTime) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.type = type;
+        this.frequencyType = frequencyType;
         this.dateTime = dateTime;
     }
 
@@ -61,14 +63,11 @@ public abstract class Task implements Repeatable {
         this.dateTime = dateTime;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", type=" + type +
-                ", dateTime=" + dateTime +
-                '}';
+    public FrequencyType getFrequencyType() {
+        return frequencyType;
+    }
+
+    public void setFrequencyType(FrequencyType frequencyType) {
+        this.frequencyType = frequencyType;
     }
 }
