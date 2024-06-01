@@ -1,9 +1,12 @@
 package org.example.service;
 
 import org.example.model.utils.Task;
+import org.example.model.utils.TaskType;
 import org.example.repository.TaskRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,7 @@ public class TaskManager {
 
 
     public List<Task> getAllTasks(LocalDate date){
-
+        return repository.getAllTasks();
     }
     public List<Task> getCurrentTasks(LocalDate date){
         List<Task> allTasks = repository.getAllTasks();
@@ -26,4 +29,10 @@ public class TaskManager {
         }
         return currentTasks;
     }
+
+
+    public void createTask(String title, String description, TaskType type, String frequencyType, Timestamp dateTime){
+
+    }
+
 }

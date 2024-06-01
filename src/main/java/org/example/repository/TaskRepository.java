@@ -17,7 +17,7 @@ public class TaskRepository {
     private static String login = "postgres";
     private static String password = "123";
 
-    public  ArrayList<Task> getAllTasks() {
+    public ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, login, password);
@@ -39,16 +39,16 @@ public class TaskRepository {
         return tasks;
     }
 
-    public  void insertTask(String title, String description, String taskType, Timestamp dateTime, String frequencyType) {
+
+    public void createTask(String title, String description, String type, String frequencyType, Timestamp dateTime) {
         try {
             Connection connection = DriverManager.getConnection(url, login, password);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO diary.task (title,  description, type, date_time, frequency_type) VALUES(?, ?, ?, ?, ?)");
-
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO task(title, description, type, frequency_type, date_time) VALUES(?, ?, ?, ?, ?)");
             statement.setString(1, title);
             statement.setString(2, description);
-            statement.setString(3, taskType);
-            statement.setTimestamp(4, dateTime);
-            statement.setString(5, frequencyType);
+            statement.setString(3, type);
+            statement.setString(4, frequencyType);
+            statement.setTimestamp(5, dateTime);
             statement.execute();
 
             connection.close();
@@ -56,6 +56,26 @@ public class TaskRepository {
             System.out.println(e.getMessage());
         }
     }
+
+
+
+//    public  void insertTask(String title, String description, String taskType, Timestamp dateTime, String frequencyType) {
+//        try {
+//            Connection connection = DriverManager.getConnection(url, login, password);
+//            PreparedStatement statement = connection.prepareStatement("INSERT INTO diary.task (title,  description, type, date_time, frequency_type) VALUES(?, ?, ?, ?, ?)");
+//
+//            statement.setString(1, title);
+//            statement.setString(2, description);
+//            statement.setString(3, taskType);
+//            statement.setTimestamp(4, dateTime);
+//            statement.setString(5, frequencyType);
+//            statement.execute();
+//
+//            connection.close();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     private static Task getTaskByType(long id, String title, String description, String taskType, String dateTime, String frequencyType) {
         Task task = null;
