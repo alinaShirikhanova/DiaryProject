@@ -11,6 +11,9 @@ public class DailyTask extends Task {
         super(id, title, description, type, dateTime);
     }
 
+    public DailyTask() {
+    }
+
     @Override
     public LocalDate getClosestDate(LocalDate currentDate) {
         LocalDate taskDate = this.getDateTime().toLocalDate();

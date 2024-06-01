@@ -12,6 +12,9 @@ public class OneTimeTask extends Task {
         super(id, title, description, type, dateTime);
     }
 
+    public OneTimeTask() {
+    }
+
     @Override
     public LocalDate getClosestDate(LocalDate currentDate) {
        return this.getDateTime().toLocalDate();

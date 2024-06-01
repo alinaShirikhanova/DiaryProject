@@ -18,6 +18,8 @@ public abstract class Task implements Repeatable {
         this.dateTime = dateTime;
     }
 
+    public Task() {
+    }
 
     public long getId() {
         return id;
@@ -57,5 +59,16 @@ public abstract class Task implements Repeatable {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }

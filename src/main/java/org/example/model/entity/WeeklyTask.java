@@ -12,6 +12,9 @@ public class WeeklyTask extends Task implements Repeatable {
         super(id, title, description, type, dateTime);
     }
 
+    public WeeklyTask() {
+    }
+
     @Override
     public LocalDate getClosestDate(LocalDate currentDate) {
         LocalDate taskDate = this.getDateTime().toLocalDate();

@@ -10,6 +10,10 @@ import java.util.List;
 public class TaskManager {
     private TaskRepository repository = new TaskRepository();
 
+
+    public List<Task> getAllTasks(LocalDate date){
+
+    }
     public List<Task> getCurrentTasks(LocalDate date){
         List<Task> allTasks = repository.getAllTasks();
         List<Task> currentTasks = new ArrayList<>();

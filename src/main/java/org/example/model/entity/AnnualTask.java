@@ -13,6 +13,9 @@ public class AnnualTask extends Task implements Repeatable {
         super(id, title, description, type, dateTime);
     }
 
+    public AnnualTask() {
+    }
+
     @Override
     public LocalDate getClosestDate(LocalDate currentDate) {
         LocalDate taskDate = this.getDateTime().toLocalDate();

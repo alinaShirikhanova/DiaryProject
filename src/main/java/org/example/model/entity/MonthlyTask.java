@@ -12,6 +12,9 @@ public class MonthlyTask extends Task implements Repeatable {
         super(id, title, description, type, dateTime);
     }
 
+    public MonthlyTask() {
+    }
+
     @Override
     public LocalDate getClosestDate(LocalDate currentDate) {
         LocalDate taskDate = this.getDateTime().toLocalDate();
