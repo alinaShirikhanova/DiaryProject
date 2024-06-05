@@ -6,8 +6,6 @@ import org.example.model.utils.Task;
 import org.example.model.utils.TaskType;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,20 +27,13 @@ public class TaskRepository {
     }
 
 
-    public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public List<Task> getAllTasks() {
+        List<Task> tasks = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM diary.task");
-            while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String title = resultSet.getString("title");
-                String description = resultSet.getString("description");
-                String dateTime = resultSet.getString("date_time");
-                String taskType = resultSet.getString("type");
-                String frequencyType = resultSet.getString("frequency_type");
-                tasks.add(getTaskByType(id, title, description, taskType, dateTime, frequencyType));
-            }
+           tasks = createListOfTasks(resultSet);
+
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -58,7 +49,6 @@ public class TaskRepository {
             statement.setString(1, type);
             ResultSet resultSet = statement.executeQuery();
             tasks = createListOfTasks(resultSet);
-
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -89,15 +79,7 @@ public class TaskRepository {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM diary.task WHERE id = ?");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            resultSet.next();
-
-            String title = resultSet.getString("title");
-            String description = resultSet.getString("description");
-            String dateTime = resultSet.getString("date_time");
-            String taskType = resultSet.getString("type");
-            String frequencyType = resultSet.getString("frequency_type");
-            task = getTaskByType(id, title, description, taskType, dateTime, frequencyType);
+            task = createListOfTasks(resultSet).getFirst();
             connection.close();
 
         } catch (SQLException e) {
@@ -115,23 +97,6 @@ public class TaskRepository {
             throw new RuntimeException(e);
         }
     }
-//    public  void insertTask(String title, String description, String taskType, Timestamp dateTime, String frequencyType) {
-//        try {
-//            Connection connection = DriverManager.getConnection(url, login, password);
-//            PreparedStatement statement = connection.prepareStatement("INSERT INTO diary.task (title,  description, type, date_time, frequency_type) VALUES(?, ?, ?, ?, ?)");
-//
-//            statement.setString(1, title);
-//            statement.setString(2, description);
-//            statement.setString(3, taskType);
-//            statement.setTimestamp(4, dateTime);
-//            statement.setString(5, frequencyType);
-//            statement.execute();
-//
-//            connection.close();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
 
     private static Task getTaskByType(long id, String title, String description, String taskType, String dateTime, String frequencyType) {
         Task task = null;
@@ -171,12 +136,4 @@ public class TaskRepository {
         task.setDateTime(Timestamp.valueOf(dateTime).toLocalDateTime());
         return task;
     }
-
-//    public List<Task> getAllTasks() {
-////        return List.of(
-////                new OneTimeTask(1, "Однократная задача", "Описание однократной задачи", TaskType.WORKING, LocalDateTime.now()),
-////                new MonthlyTask(2, "Ежемесячная задача", "Описание ежемесячной задачи", TaskType.WORKING, LocalDateTime.of(2024, 4, 24, 0, 0)),
-////                new AnnualTask(3, "Ежегодная задача", "Описание ежегодной задачи", TaskType.PERSONAL, LocalDateTime.of(2023, 5, 25, 0, 0))
-////        );
-//    }
 }
